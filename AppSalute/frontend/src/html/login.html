@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AppSalute</title>
+    <link rel="icon" href="/public/favicon.png" type="image/png">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <h1>AppSalute</h1>
+        <form id="loginForm" action="#" method="POST" novalidate>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+            <p id="error" class="error-message" style="display:none;">Credenziali errate</p>
+            <button type="submit" id="loginButton">Accedi</button>
+        </form>
+    </div>
+
+    <script>
+        // Aggiunge un listener per l'evento di invio del modulo
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Verifica se i campi sono vuoti
+            if (!email || !password) {
+                showError('Compila tutti i campi');
+                return;
+            }
+
+            // Invia una richiesta POST al server per il login
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const result = await response.json();
+
+            // Gestisce la risposta del server
+            if (response.ok) {
+                window.location.href = "/index";
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>

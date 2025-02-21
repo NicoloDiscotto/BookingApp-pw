@@ -1,0 +1,123 @@
+/*  Stile generale */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenitore del form di login */
+.login-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+/* Titolo del form */
+.login-container h1 {
+    font-size: 1.5rem;
+    color: #2e7d32;
+    margin-bottom: 15px;
+}
+
+/* Campi di input */
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Effetto al focus */
+.login-container input:focus {
+    border-color: #2e7d32;
+    outline: none;
+}
+
+/* Pulsante di login */
+.login-container button {
+    background-color: #2e7d32;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Effetto hover sul pulsante di login*/
+.login-container button:hover {
+    background-color: #1b5e20;
+}
+
+/* Link */
+.login-container a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Effetto hover sui link */
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+/* Messaggio di errore */
+#error {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    display: none;
+}
+
+/* Stile per schermi piccoli */
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-container {
+        width: 90%;
+        max-width: 350px;
+        padding: 15px;
+    }
+}
+
+/* Stile per schermi molto piccoli */
+@media (max-width: 480px) {
+    .login-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .login-container h1 {
+        font-size: 1.2rem;
+    }
+
+    .login-container input {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .login-container button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
