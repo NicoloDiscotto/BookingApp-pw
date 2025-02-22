@@ -1,0 +1,263 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "AppSalute API",
+        "description": "API per la gestione delle prenotazioni mediche",
+        "version": "1.0.0"
+    },
+    "host": "127.0.0.1:5000",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "summary": "Login utente",
+                "description": "Autentica un utente con email e password.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "example": "test@email.com"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "example": "password123"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login riuscito",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Login effettuato con successo"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenziali errate"
+                    }
+                }
+            }
+        },
+        "/api/doctors": {
+            "get": {
+                "summary": "Recupera la lista dei dottori",
+                "description": "Ottieni la lista di tutti i dottori disponibili per la prenotazione.",
+                "responses": {
+                    "200": {
+                        "description": "Lista dei dottori recuperata con successo",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Dr.ssa Aurora Neri"
+                                    },
+                                    "specialization": {
+                                        "type": "string",
+                                        "example": "Dermatologa"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Errore durante il caricamento dei dottori"
+                    }
+                }
+            }
+        },
+        "/api/available-time-slots": {
+            "get": {
+                "summary": "Recupera le fasce orarie disponibili",
+                "description": "Ottieni la lista delle fasce orarie disponibili per la prenotazione.",
+                "responses": {
+                    "200": {
+                        "description": "Fasce orarie recuperate con successo",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "start_time": {
+                                        "type": "string",
+                                        "example": "08:00"
+                                    },
+                                    "end_time": {
+                                        "type": "string",
+                                        "example": "09:00"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Errore nel recupero delle fasce orarie disponibili."
+                    }
+                }
+            }
+        },
+        "/api/my-bookings": {
+            "get": {
+                "summary": "Lista prenotazioni",
+                "description": "Ritorna tutte le prenotazioni dal database.",
+                "responses": {
+                    "200": {
+                        "description": "Elenco prenotazioni recuperato",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "utente": {
+                                        "type": "string",
+                                        "example": "Mario Rossi"
+                                    },
+                                    "data": {
+                                        "type": "string",
+                                        "example": "2025-03-01"
+                                    },
+                                    "orario": {
+                                        "type": "string",
+                                        "example": "10:30"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/book-appointment": {
+            "post": {
+                "summary": "Prenota una visita",
+                "description": "Crea una nuova prenotazione per un medico.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "date": {
+                                    "type": "string",
+                                    "example": "2025-03-01"
+                                },
+                                "timeSlot": {
+                                    "type": "string",
+                                    "example": "10:30"
+                                },
+                                "doctorId": {
+                                    "type": "integer",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Prenotazione avvenuta con successo"
+                    },
+                    "400": {
+                        "description": "Dati mancanti o fascia oraria non disponibile"
+                    }
+                }
+            }
+        },
+        "/api/update-booking/{booking_id}": {
+            "put": {
+                "summary": "Modifica una prenotazione",
+                "description": "Aggiorna la data e l'orario di una prenotazione esistente.",
+                "parameters": [
+                    {
+                        "name": "booking_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "date": {
+                                    "type": "string",
+                                    "example": "2025-03-02"
+                                },
+                                "timeSlot": {
+                                    "type": "string",
+                                    "example": "11:30"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Prenotazione modificata con successo"
+                    },
+                    "400": {
+                        "description": "Dati mancanti o fascia oraria già prenotata"
+                    },
+                    "404": {
+                        "description": "Prenotazione non trovata"
+                    }
+                }
+            }
+        },
+        "/api/delete-booking/{booking_id}": {
+            "delete": {
+                "summary": "Cancella una prenotazione",
+                "description": "Elimina una prenotazione esistente.",
+                "parameters": [
+                    {
+                        "name": "booking_id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Prenotazione cancellata con successo"
+                    },
+                    "404": {
+                        "description": "Prenotazione non trovata"
+                    }
+                }
+            }
+        }
+    }
+}
