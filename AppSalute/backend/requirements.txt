@@ -1,2 +1,4 @@
 flask
+flask-swagger
+flask-swagger-ui
 bcrypt
