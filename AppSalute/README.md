@@ -5,7 +5,7 @@
 Clone the repository:
 
 ```sh
-$ git clone https://github.com/NicoloDiscotto/AppSalute-pw.git
+$ git clone https://github.com/NicoloDiscotto/BookingApp-pw.git
 ```
 
 ```sh
