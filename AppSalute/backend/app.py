@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, session, send_from_directory
+from flask_swagger_ui import get_swaggerui_blueprint
 from datetime import datetime
 import sqlite3
 import os
@@ -10,6 +11,12 @@ app.static_folder = '../frontend/src'
 app.public_folder = '../frontend/public'
 app.database = os.path.join(os.path.dirname(__file__), '../db/app.db')
 app.secret_key = os.urandom(24) 
+
+# Configurazione di Swagger 
+SWAGGER_URL = "/api/docs"  
+API_URL = "/swagger.json"  
+swaggerui_blueprint = get_swaggerui_blueprint(SWAGGER_URL, API_URL)
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 # Connessione al database
 def get_db_connection():
@@ -46,6 +53,11 @@ def js(script):
 @app.route('/public/<path:filename>')
 def public_files(filename):
     return send_from_directory(app.public_folder, filename)
+
+# Route per servire lo swagger
+@app.route('/swagger.json')
+def swagger_json():
+    return send_from_directory(os.path.abspath(os.path.dirname(__file__)), "swagger.json")
 
 # Login
 @app.route('/login', methods=['POST'])
